@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+
 import './App.css';
-import pic from './imgs/1.png';
+
 class App extends Component {
     constructor(props){
         super(props);
@@ -13,7 +13,7 @@ class App extends Component {
                 {src:require('./imgs/1.jpg'),sign:"约吗 宝贝？",name:"你大姐"},
                 {src:require('./imgs/2.jpg'),sign:"约吗 宝贝？",name:"你大姐"},
                 {src:require('./imgs/3.jpg'),sign:"约吗 宝贝？",name:"你大姐"},
-                {src:require('./imgs/4.png'),sign:"约吗 宝贝？",name:"你大姐"}
+                {src:require('./imgs/1.jpg'),sign:"约吗 宝贝？",name:"你大姐"}
             ]
         })
     }
