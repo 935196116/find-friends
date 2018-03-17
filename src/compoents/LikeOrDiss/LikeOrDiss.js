@@ -2,12 +2,208 @@ import React, { Component } from 'react';
 
 import './LikeOrDiss.css';
 
+
+
+
+
 class LikeOrDiss extends Component {
     constructor(props){
+
         super(props);
+
+        this.state={
+            tmp:{
+                isTracking:false,
+                isAnimating:false,
+                slideValue:{
+                    w:0,
+                    h:0
+                }
+            }
+
+
+        };
+        this.basicData={
+            start:{
+                x:0,
+                y:0
+            },
+            end:{
+                x:0,
+                y:0
+            },
+            currentPage:0
+        };
+
+    }
+
+    computeStyle(idx){
+
+
+        let z = 3,opacity=1,tranZ=0;
+        if(idx===0)
+            z=10;
+        else
+            z=z-idx;
+        if(idx>2)
+        {
+            opacity=0;
+            tranZ = -120;
+        }
+        else
+            tranZ = -idx*40;
+
+        let style={
+            transform: 'translate3d(0px, 0px, '+tranZ+'px) rotate(0deg)',
+            zIndex:z,
+            opacity:opacity,
+        };
+
+        if(this.state.tmp.isTracking)
+            if( idx === this.basicData.currentPage )
+                return this.computeMoveStyle(idx);
+            else if( this.basicData.currentPage+3>=idx+1)
+                return this.computeMoveStyle(idx);
+
+        return style;
+    };
+    computeMoveStyle (idx){
+        let {
+            tmp
+        } = this.state;
+        let style ={
+            opacity:1,
+
+         };
+        //如果是第一个被移动
+        if(idx===0){
+            style.transform = 'translate3D('+ tmp.slideValue.w + 'px' + ','+ tmp.slideValue.h + 'px' + ',0px)';
+            style.transition="none";
+            style.zIndex=10;
+
+        }else{
+            //改变z轴
+            let x = Math.abs((tmp.slideValue.w+1))/200;
+            let y = Math.abs((tmp.slideValue.h+1))/200;
+            x=x>=1?1:x;
+            y=y>=1?1:y;
+            //这里做计算是为了 在移动 首个标签时候 剩下的两个标签放大的过程
+            style.transform = 'translate3D(0px,0px' + ','+(-(idx-Math.max(x,y))*40)+'px)';
+            style.transition="none";
+            style.zIndex=3-idx;
+        }
+        return style;
+
+
+
 
     }
     componentDidMount(){
+
+    }
+    handleTouchEnd(e){
+        //回归初始状态
+        this.setState({
+            tmp:{
+                ...this.state.tmp,
+                isTracking:false,
+                // slideValue:{
+                //     w:0,
+                //     h:0
+                // }
+            }
+        });
+
+        //判断是否移动出了边界 执行移除动画
+
+
+        //没有超出边界 状态回归初始
+
+        this.setState({
+            tmp:{
+                ...this.state.tmp,
+                isTracking:false,
+                slideValue:{
+                    w:0,
+                    h:0
+                }
+            }
+        });
+
+        console.log(this.state.tmp.slideValue)
+
+
+    }
+    handleTouchMove(e){
+        if(this.state.tmp.isTracking===true)
+        {
+
+            //手机端
+            if(e.type === 'touchmove')
+            {
+
+                if(e.touches)
+                {
+                    // console.log(e.touches[0]);
+                    this.basicData.end.x = e.touches[0].clientX;
+                    this.basicData.end.y = e.touches[0].clientY;
+
+                }
+            }
+            //pc端
+            else
+            {
+                this.basicData.end.x = e.clientX;
+                this.basicData.end.y = e.clientY;
+
+            }
+            // console.log("移动中:",this.basicData.end);
+
+            //计算滑动值
+            this.setState({
+                tmp:{
+                    ...this.state.tmp,
+                    slideValue:{
+                        w:this.basicData.end.x-this.basicData.start.x,
+                        h:this.basicData.end.y-this.basicData.start.y
+                    }
+                }
+            });
+            // this.tmp.slideValue.w = this.basicData.end.x-this.basicData.start.x;
+            // this.tmp.slideValue.h = this.basicData.end.y-this.basicData.start.y;
+
+        }
+    }
+    handleTouchStart(e){
+        if(this.state.tmp.isTracking===true)
+            return;
+        //手机端
+        if(e.type === 'touchstart')
+        {
+
+            if(e.touches)
+            {
+                // console.log(e.touches[0]);
+                this.basicData.start.x = e.touches[0].clientX;
+                this.basicData.start.y = e.touches[0].clientY;
+
+            }
+        }
+        //pc端
+        else
+        {
+
+            this.basicData.start.x = e.clientX;
+            this.basicData.start.y = e.clientY;
+
+        }
+        // console.log("开始:",this.basicData.start);
+        this.setState({
+            tmp:{
+                ...this.state.tmp,
+                isTracking:true,
+            }
+        });
 
     }
     render() {
@@ -16,21 +212,44 @@ class LikeOrDiss extends Component {
                 <div className="lapped-card">
                     <div className="center-wrap">
                         <ul>
-                            {this.props.data && this.props.data.map(function (item,idx) {
-                                let z = 3,opacity=1,tranZ=0;
-                                if(idx===0)
-                                    z=10;
-                                else
-                                    z=z-idx;
-                                if(idx>2)
-                                {
-                                    opacity=0;
-                                    tranZ = -120;
-                                }
-                                else
-                                    tranZ = -idx*40;
+                            {this.props.data && this.props.data.map( (item,idx) =>{
+                                // let z = 3,opacity=1,tranZ=0;
+                                // if(idx===0)
+                                //     z=10;
+                                // else
+                                //     z=z-idx;
+                                // if(idx>2)
+                                // {
+                                //     opacity=0;
+                                //     tranZ = -120;
+                                // }
+                                // else
+                                //     tranZ = -idx*40;
                                 return(
-                                    <li key={idx} style={{transform: 'translate3d(0px, 0px, '+tranZ+'px) rotate(0deg)',zIndex:z,opacity:opacity}}>
+                                    <li
+
+                                        key={idx}
+                                        style={this.computeStyle.bind(this)(idx)}
+                                        onTouchStart={(e)=>{
+                                            this.handleTouchStart(e)
+                                        }}
+                                        onTouchEnd={(e)=>{
+                                            this.handleTouchEnd(e)
+                                        }}
+                                        onTouchMove={(e)=>{
+                                            this.handleTouchMove(e)
+                                        }}
+                                        onMouseDown={(e)=>{
+                                            this.handleTouchStart(e)
+                                        }}
+                                        onMouseUp={(e)=>{
+                                            this.handleTouchEnd(e)
+                                        }}
+                                        onMouseMove={(e)=>{
+                                            this.handleTouchMove(e)
+                                        }}
+
+                                    >
                                         <div>
                                             <img  src={item.src} alt=""/>
                                         </div>
