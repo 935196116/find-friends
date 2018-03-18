@@ -5,6 +5,7 @@
 
 左滑动为不喜欢
 
+**[demo](https://volankey.github.io/find-friends/demo/)**
 
 ![image](./show.gif)
 ## Props
