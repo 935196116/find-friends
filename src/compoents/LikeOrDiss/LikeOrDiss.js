@@ -34,26 +34,51 @@ class LikeOrDiss extends Component {
                 x:0,
                 y:0
             },
-            currentPage:0
+            currentPage:2
         };
 
     }
+    computeZIndex(idx)
+    {
+        let z =3;
+        if(idx===this.basicData.currentPage)
+        {
+            z=10;
 
+        }
+        else if(idx < this.basicData.currentPage)
+        {
+            z= this.basicData.currentPage-idx;
+
+        }
+        else
+            z= 3-idx+this.basicData.currentPage;
+        return z;
+    }
+    computeTranZ(z){
+        let tranZ = 0;
+        if(z===10)
+            tranZ=0;
+        else
+            tranZ = (z-3)*40;
+        return tranZ;
+    }
     computeStyle(idx){
 
 
-        let z = 3,opacity=1,tranZ=0;
-        if(idx===0)
-            z=10;
-        else
-            z=z-idx;
-        if(idx>2)
-        {
-            opacity=0;
-            tranZ = -120;
-        }
-        else
-            tranZ = -idx*40;
+        let opacity=1,tranZ=0;
+
+
+        let z=this.computeZIndex(idx);
+
+        tranZ = this.computeTranZ(z);
+        // if(idx>2)
+        // {
+        //     opacity=0;
+        //     tranZ = -120;
+        // }
+        // else
+        //     tranZ = -idx*40;
 
         let style={
             transform: 'translate3d(0px, 0px, '+tranZ+'px) rotate(0deg)',
@@ -78,7 +103,7 @@ class LikeOrDiss extends Component {
 
          };
         //如果是第一个被移动
-        if(idx===0){
+        if(idx===this.basicData.currentPage){
             style.transform = 'translate3D('+ slideValue.w + 'px' + ','+ slideValue.h + 'px' + ',0px)';
             style.transition="none";
             style.zIndex=10;
@@ -90,9 +115,11 @@ class LikeOrDiss extends Component {
             x=x>=1?1:x;
             y=y>=1?1:y;
             //这里做计算是为了 在移动 首个标签时候 剩下的两个标签放大的过程
-            style.transform = 'translate3D(0px,0px' + ','+(-(idx-Math.max(x,y))*40)+'px)';
+            let z = this.computeZIndex(idx);
+            let tranZ = this.computeTranZ(z);
+            style.transform = 'translate3D(0px,0px' + ','+(tranZ+Math.max(x,y)*40)+'px)';
             style.transition="none";
-            style.zIndex=3-idx;
+            style.zIndex=z;
         }
         return style;
 
@@ -110,6 +137,10 @@ class LikeOrDiss extends Component {
 
         //判断是否移动出了边界 执行移除动画
 
+        if(Math.abs(this.state.slideValue.w)>200)
+        {
+            this.basicData.currentPage = (this.basicData.currentPage+1)%3;
+        }
 
         //没有超出边界 状态回归初始
 
