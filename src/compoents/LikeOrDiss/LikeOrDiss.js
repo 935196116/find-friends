@@ -176,6 +176,7 @@ class LikeOrDiss extends Component {
             } = this.state;
             let style ={
                 opacity:0,
+                zIndex:11 //应该将移出去的卡片 层级设为最高的
 
             };
             style.transform = 'translate3D('+ slideValue.w + 'px' + ','+ slideValue.h + 'px' + ',0px)';
