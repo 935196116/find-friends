@@ -17,13 +17,15 @@ class App extends Component {
                 {src:require('./imgs/2.jpg'),sign:"约吗 宝贝1？",name:"你大姐"},
                 {src:require('./imgs/1.jpg'),sign:"约吗 宝贝2？",name:"你大姐"},
                 {src:require('./imgs/3.jpg'),sign:"约吗 宝贝3？",name:"你大姐"},
-                // {src:require('./imgs/1.jpg'),sign:"约吗 宝贝？",name:"你大姐"}
+                {src:require('./imgs/1.jpg'),sign:"约吗 宝贝4？",name:"你大姐"}
             ]
         })
     }
       render() {
         return (
-            <LikeOrDiss data={this.state.data}/>
+            <LikeOrDiss
+                visibleNum={3}
+                data={this.state.data}/>
         );
       }
 }
