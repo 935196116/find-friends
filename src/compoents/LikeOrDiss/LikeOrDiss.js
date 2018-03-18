@@ -192,13 +192,24 @@ class LikeOrDiss extends Component {
             // console.log("animateEnd");
             this.tmpData.isAnimating=false;
 
-            // this.tmpData.isMovingGround=true;
+            //调用
+            if(this.state.slideValue.w>0)
+            {
+                this.props.moveRight(idx);
+            }
+            else
+            {
+                this.props.moveLeft(idx);
+            }
 
             this.setState({
                 slideValue:{
                     w:0,h:0
                 },
             })
+
+
+
         }
 
 
@@ -206,7 +217,7 @@ class LikeOrDiss extends Component {
     }
     //移出当前卡片，并将 当前卡片索引置为下一个
     moveOut(w,h){
-        console.log("moveOUt移除");
+        // console.log("moveOUt移出");
         this.tmpData.isTracking=false;
         this.tmpData.isAnimating=true;
 
@@ -216,7 +227,9 @@ class LikeOrDiss extends Component {
                 w,h
             },
 
-        })
+        });
+
+
         this.basicData.currentPage = (this.basicData.currentPage+1)%this.props.data.length
 
     }
@@ -236,8 +249,9 @@ class LikeOrDiss extends Component {
             let radio = h/w;
             let new_w = w>=0?w+200:w-200;
             let new_h = h>=0?  Math.abs(new_w*radio):-Math.abs(new_w*radio);
-            
+
             this.moveOut(new_w,new_h);
+
 
 
 
