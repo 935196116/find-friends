@@ -136,19 +136,23 @@ class LikeOrDiss extends Component {
             opacity:1,
 
          };
+        let x = Math.abs((slideValue.w+1))/200;
+        let y = Math.abs((slideValue.h+1))/200;
+        x=x>=1?1:x;
+        y=y>=1?1:y;
+
         //如果是第一个被移动
         if(idx===this.basicData.currentPage){
-            style.transform = 'translate3D('+ slideValue.w + 'px' + ','+ slideValue.h + 'px' + ',0px)';
+            //计算角度，最大为6
+            let rotate = slideValue.w>=0?(x*6):(-x*6);
+            style.transform = 'translate3D('+ slideValue.w + 'px' + ','+ slideValue.h + 'px' + ',0px) rotate('+(rotate)+'deg)';
             style.transition="none";
             style.zIndex=10;
 
 
         }else{
             //改变z轴
-            let x = Math.abs((slideValue.w+1))/200;
-            let y = Math.abs((slideValue.h+1))/200;
-            x=x>=1?1:x;
-            y=y>=1?1:y;
+
             //这里做计算是为了 在移动 首个标签时候 剩下的两个标签放大的过程
             let {z,tranZ} = this.computeZ(idx);
             // let tranZ = this.computeTranZ(z);
