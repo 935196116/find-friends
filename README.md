@@ -31,8 +31,8 @@ renderItem | Func | item 单个数据 | 渲染每个卡片
 import React, { Component } from 'react';
 
 import './App.css';
-import LikeOrDiss from './compoents/LikeOrDiss/LikeOrDiss';
-
+import LikeOrDiss from 'react-like-or-diss';
+//渲染单个卡片
 const ItemContent = (item)=>{
     return (
         <div className="card-item-content">
@@ -75,8 +75,9 @@ class App extends Component {
                 <div className="my-card-wrap">
                     <LikeOrDiss
                         data={this.state.data}
-                        moveRight={(idx)=>{}}
-                        moveLeft={(idx)=>{}}
+                        moveRight={(idx)=>{alert("喜欢"+this.state.data[idx].name)}}
+                        moveLeft={(idx)=>{alert("不喜欢"+this.state.data[idx].name)}}
+                        //visibleNum应小于data.length
                         visibleNum={3}
                         renderItem={(item)=>ItemContent(item)}
                     />
@@ -90,5 +91,6 @@ class App extends Component {
 }
 
 export default App;
+
 
 ```
