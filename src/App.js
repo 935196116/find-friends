@@ -1,7 +1,24 @@
 import React, { Component } from 'react';
 
 import './App.css';
-import LikeOrDiss from './compoents/LikeOrDiss/LikeOrDiss';
+import LikeOrDiss from 'react-like-or-diss';
+//渲染单个卡片
+const ItemContent = (item)=>{
+    return (
+        <div className="card-item-content">
+            <div>
+                <img  src={item.src} alt=""/>
+            </div>
+            <section>
+                <p className="card-name">{item.name}</p>
+                <p className="card-sign">{item.sign}</p>
+                <p className="card-host">volankey</p>
+            </section>
+
+        </div>
+
+    )
+};
 class App extends Component {
     constructor(props){
         super(props);
@@ -23,12 +40,21 @@ class App extends Component {
     }
       render() {
         return (
-            <LikeOrDiss
-                moveRight={(idx)=>{alert("您喜欢了 "+this.state.data[idx].name)}}
-                moveLeft={(idx)=>{alert("不喜欢 "+this.state.data[idx].name)}}
-                visibleNum={3}
-                data={this.state.data}
-            />
+            <div className="bgc">
+                {/*my-card-wrap 一定要有宽高 组件的宽高是充满他的*/}
+                <div className="my-card-wrap">
+                    <LikeOrDiss
+                        data={this.state.data}
+                        moveRight={(idx)=>{}}
+                        moveLeft={(idx)=>{}}
+                        visibleNum={3}
+                        renderItem={(item)=>ItemContent(item)}
+                    />
+                </div>
+            </div>
+
+
+
         );
       }
 }

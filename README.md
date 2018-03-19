@@ -5,6 +5,8 @@
 
 左滑动为不喜欢
 
+已经封装成组件
+
 **[demo](https://volankey.github.io/find-friends/demo/)**
 
 ![image](./show.gif)
@@ -12,15 +14,41 @@
 
 Name | type | arguments | desc
 ---|---|---|---
-moveRight | Func | index number| 右滑动结束回调
-moveLeft | Func | index number|左滑动结束回调
+moveRight | Func | index| 右滑动结束回调 传出数据索引
+moveLeft | Func | index|左滑动结束回调 传出数据索引
 data | Array [src:"",sign:"",name:""]||列表数据
-visibleNum | Number  | |能显示的卡片个数,需要小于data.length
+visibleNum | Number  | |能显示的卡片个数,需要==小于data.length==
+renderItem | Func | item 单个数据 | 渲染每个卡片
 
 ## 使用示例
 
+安装组件
+
+> **npm install react-like-or-diss --save-dev**
+
+
 ```
+import React, { Component } from 'react';
+
+import './App.css';
 import LikeOrDiss from './compoents/LikeOrDiss/LikeOrDiss';
+
+const ItemContent = (item)=>{
+    return (
+        <div className="card-item-content">
+            <div>
+                <img  src={item.src} alt=""/>
+            </div>
+            <section>
+                <p className="card-name">{item.name}</p>
+                <p className="card-sign">{item.sign}</p>
+                <p className="card-host">volankey</p>
+            </section>
+
+        </div>
+
+    )
+};
 class App extends Component {
     constructor(props){
         super(props);
@@ -42,15 +70,25 @@ class App extends Component {
     }
       render() {
         return (
-            <LikeOrDiss
-                moveRight={(idx)=>{alert("您喜欢了 "+this.state.data[idx].name)}}
-                moveLeft={(idx)=>{alert("不喜欢 "+this.state.data[idx].name)}}
-                visibleNum={3}
-                data={this.state.data}
-            />
+            <div className="bgc">
+                {/*my-card-wrap 一定要有宽高 组件的宽高是充满他的*/}
+                <div className="my-card-wrap">
+                    <LikeOrDiss
+                        data={this.state.data}
+                        moveRight={(idx)=>{}}
+                        moveLeft={(idx)=>{}}
+                        visibleNum={3}
+                        renderItem={(item)=>ItemContent(item)}
+                    />
+                </div>
+            </div>
+
+
+
         );
       }
 }
+
+export default App;
+
 ```
-
-
