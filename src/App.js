@@ -45,8 +45,9 @@ class App extends Component {
                 <div className="my-card-wrap">
                     <LikeOrDiss
                         data={this.state.data}
-                        moveRight={(idx)=>{}}
-                        moveLeft={(idx)=>{}}
+                        moveRight={(idx)=>{alert("喜欢"+this.state.data[idx].name)}}
+                        moveLeft={(idx)=>{alert("不喜欢"+this.state.data[idx].name)}}
+                        //visibleNum应小于data.length
                         visibleNum={3}
                         renderItem={(item)=>ItemContent(item)}
                     />
