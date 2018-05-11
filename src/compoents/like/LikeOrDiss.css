@@ -1,0 +1,47 @@
+
+.lapped-card.center-wrap{
+  height: 100%;
+  width: 100%;
+  user-select: none;
+
+}
+.lapped-card.center-wrap ul{
+  width: 100%;
+  height: 100%;
+  position: relative;
+  list-style: none;
+  margin:0;
+  padding: 0;
+  /*子元素视距*/
+  perspective: 1000px;
+  /*透视位置*/
+  perspective-origin: 50% 150%;
+
+  -webkit-perspective: 1000px;
+  -webkit-perspective-origin: 50% 150%;
+
+}
+.lapped-card.center-wrap .card-item{
+  width: 100%;
+  /*height: 100%;*/
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+
+  opacity: 1;
+
+  transition-timing-function: ease;
+  transition-duration: 300ms;
+
+  user-select: none;
+  pointer-events: auto;
+  box-shadow: 1px 1px 6px #555;
+  border-radius: 8px;
+  overflow: hidden;
+
+  height: 100%;
+
+
+}

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 
 import './App.css';
-import LikeOrDiss from 'react-like-or-diss';
+import LikeOrDiss from './compoents/like/LikeOrDiss';
+import Scroll from './compoents/scroller/Scroller';
 //渲染单个卡片
 const ItemContent = (item)=>{
     return (
@@ -39,22 +40,29 @@ class App extends Component {
         })
     }
       render() {
+          {/*<div className="bgc">*/}
+              {/*/!*my-card-wrap 一定要有宽高 组件的宽高是充满他的*!/*/}
+              {/*<div className="my-card-wrap">*/}
+                  {/*<LikeOrDiss*/}
+                      {/*data={this.state.data}*/}
+                      {/*moveRight={(idx)=>{*/}
+                          {/*// alert("喜欢"+this.state.data[idx].name)*/}
+                      {/*}}*/}
+                      {/*moveLeft={*/}
+                          {/*(idx)=>{*/}
+                              {/*// alert("不喜欢"+this.state.data[idx].name)*/}
+                          {/*}}*/}
+                      {/*//visibleNum应小于data.length*/}
+                      {/*visibleNum={3}*/}
+                      {/*renderItem={(item)=>ItemContent(item)}*/}
+                  {/*/>*/}
+              {/*</div>*/}
+          {/*</div>*/}
         return (
-            <div className="bgc">
-                {/*my-card-wrap 一定要有宽高 组件的宽高是充满他的*/}
-                <div className="my-card-wrap">
-                    <LikeOrDiss
-                        data={this.state.data}
-                        moveRight={(idx)=>{alert("喜欢"+this.state.data[idx].name)}}
-                        moveLeft={(idx)=>{alert("不喜欢"+this.state.data[idx].name)}}
-                        //visibleNum应小于data.length
-                        visibleNum={3}
-                        renderItem={(item)=>ItemContent(item)}
-                    />
-                </div>
-            </div>
 
 
+
+             <Scroll/>
 
         );
       }

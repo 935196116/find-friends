@@ -350,6 +350,7 @@ class LikeOrDiss extends Component {
                     <div className="lapped-card center-wrap">
                         <ul>
                             {this.props.data && this.props.data.map( (item,idx) =>{
+
                                 return(
 
                                     <LikeItem

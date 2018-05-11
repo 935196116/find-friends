@@ -1,0 +1,12 @@
+.scroller-wrap{
+    height: 400px;
+    overflow: hidden;
+    background-color: pink;
+}
+ul{
+    margin:0;
+    list-style: none;
+}
+ul li{
+    margin-bottom: 20px;
+}
